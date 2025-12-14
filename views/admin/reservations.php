@@ -26,13 +26,12 @@ function content()
         <div class="row m-3">
             <div class="col-6">
                 <div class="d-flex align-items-center m-3">
-                    <i class="bx bx-search btn btn-outline-primary"></i>
-                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search by book or user..." aria-label="Search..." />
+                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search Book Name  " aria-label="Search..." />
                 </div>
             </div>
             <div class="col-2">
                 <div class="form-group my-3">
-                    <button class="btn btn-outline-primary d-inline" id="clear">search</button>
+                    <button class="btn btn-outline-danger d-inline" id="clear">x</button>
                 </div>
             </div>
         </div>

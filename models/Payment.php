@@ -101,4 +101,16 @@ class Payment extends BaseModel
         $result = $this->pm->run('SELECT MAX(id) as lastInsertedId FROM payment', null, true);
         return $result['lastInsertedId'] ?? 100;
     }
+
+    public function getAllPaymentWithBorrowing()
+    {
+        return $this->pm->run(
+            "SELECT payment.id, payment.user_id, payment.amount, payment.payment_type, payment.status, payment.created_at,
+                    borrowing.id AS borrowing_id, borrowing.book_id, borrowing.borrow_date, borrowing.due_date, borrowing.return_date
+             FROM payment
+             LEFT JOIN fine_fee ON payment.id = fine_fee.payment_id
+             LEFT JOIN borrowing ON fine_fee.borrow_id = borrowing.id
+             ORDER BY payment.created_at DESC"
+        );
+    }
 }

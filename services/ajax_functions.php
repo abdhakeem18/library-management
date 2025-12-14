@@ -831,16 +831,18 @@ if ($action == 'create_notification') {
     require_once BASE_PATH . '/models/Notification.php';
     
     $notification = new Notification();
+    $notification->user_id = $_REQUEST['user_id'] ?? null;
+    $notification->type = $_REQUEST['type'] ?? null;
+    $notification->message = $_REQUEST['message'] ?? null;
     
-    $data = [
-        'user_id' => $_POST['user_id'],
-        'type' => $_POST['type'],
-        'message' => $_POST['message']
-    ];
+    if (!$notification->user_id || !$notification->type || !$notification->message) {
+        echo json_encode(['success' => false, 'message' => 'Missing required fields!']);
+        exit;
+    }
     
-    $result = $notification->save($data);
+    $result = $notification->save();
     
-    if ($result) {
+    if ($result != -1) {
         echo json_encode(['success' => true, 'message' => 'Notification sent successfully!']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to send notification!']);
@@ -856,7 +858,7 @@ if ($action == 'mark_notification_read') {
     
     $result = $notification->markAsRead($notification_id);
     
-    if ($result) {
+    if ($result != -1) {
         echo json_encode(['success' => true, 'message' => 'Notification marked as read!']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to mark notification as read!']);

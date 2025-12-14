@@ -45,13 +45,12 @@ function content()
         <div class="row m-3">
             <div class="col-6">
                 <div class="d-flex align-items-center m-3">
-                    <i class="bx bx-search btn btn-outline-primary"></i>
-                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search notifications..." aria-label="Search..." />
+                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search Book Name  " aria-label="Search..." />
                 </div>
             </div>
             <div class="col-2">
                 <div class="form-group my-3">
-                    <button class="btn btn-outline-primary d-inline" id="clear">search</button>
+                    <button class="btn btn-outline-danger d-inline" id="clear">x</button>
                 </div>
             </div>
         </div>
@@ -80,7 +79,7 @@ function content()
                     ?>
                             <tr class="<?= !$notification['is_read'] ? 'table-active' : '' ?>">
                                 <td><?= $notification['id'] ?? '' ?></td>
-                                <td><?= $notification['fullname'] ?? '' ?></td>
+                                <td><?= $notification['username'] ?? '' ?></td>
                                 <td><span class="badge bg-<?= $typeClass ?>"><?= str_replace('_', ' ', ucfirst($notification['type'])) ?? '' ?></span></td>
                                 <td><?= substr($notification['message'], 0, 50) ?? '' ?>...</td>
                                 <td><span class="badge bg-<?= $readClass ?>"><?= $notification['is_read'] ? 'Read' : 'Unread' ?></span></td>
@@ -116,6 +115,9 @@ function content()
 
         <hr class="my-5" />
 
+        <!-- Alert container for page-level messages -->
+        <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+
     </div>
 
     <!-- Create Notification Modal -->
@@ -140,7 +142,7 @@ function content()
                                     $userModel = new User();
                                     $users = $userModel->getAll();
                                     foreach ($users as $user) {
-                                        echo "<option value='{$user['id']}'>{$user['fullname']} - {$user['email']}</option>";
+                                        echo "<option value='{$user['id']}'>{$user['username']} - {$user['email']}</option>";
                                     }
                                     ?>
                                 </select>
@@ -165,7 +167,12 @@ function content()
                                 <textarea class="form-control" name="message" rows="4" required></textarea>
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <div id="alert-container"></div>
+                        </div>
                     </div>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Send Notification</button>

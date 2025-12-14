@@ -10,7 +10,7 @@ function content()
 {
 
     $paymentModel = new Payment();
-    $data = $paymentModel->getAll("DESC");
+    $data = $paymentModel->getAllPaymentWithBorrowing("DESC");
 
     $fineModel = new fineFee();
     $borrowModel = new borrow();
@@ -34,7 +34,6 @@ function content()
                             <th class="">paid for</th>
                             <th class="">Member Name</th>
                             <th class="">payed type</th>
-                            <th class="">additional</th>
                             <th class="">amount</th>
                             <th class="">created at</th>
                             <th class="">status</th>
@@ -49,13 +48,12 @@ function content()
                         ?>
                                 <tr>
                                     <td><?= $payment['id'] ?></td>
-                                    <td><?= $payment['paid_for'] ?></td>
+                                    <td>Fine Fee</td>
                                     <td><?= $borrowModel->getBorrowMemberName($fineId[0]['borrow_id']) ?></td>
-                                    <td><?= $payment['payed_type'] ?></td>
-                                    <td><?= $payment['additional'] ?></td>
+                                    <td><?= $payment['payment_type'] ?></td>
                                     <td><?= $payment['amount'] ?></td>
                                     <td><?= $payment['created_at'] ?></td>
-                                    <td><?= $payment['status'] ?></td>
+                                    <td><span class="badge bg-success"><?= $payment['status'] ?></span></td>
 
                                 </tr>
                             <?php }

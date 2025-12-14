@@ -70,7 +70,7 @@ class Notification extends BaseModel
     {
         $param = array(':id' => $id);
         return $this->pm->run(
-            "SELECT n.*, u.fullname, u.email 
+            "SELECT n.*, u.username, u.email 
              FROM notifications n 
              JOIN users u ON n.user_id = u.id 
              WHERE n.id = :id",
@@ -82,7 +82,7 @@ class Notification extends BaseModel
     public function getAllNotifications()
     {
         return $this->pm->run(
-            "SELECT n.*, u.fullname, u.email 
+            "SELECT n.*, u.username, u.email 
              FROM notifications n 
              JOIN users u ON n.user_id = u.id 
              ORDER BY n.created_at DESC"
